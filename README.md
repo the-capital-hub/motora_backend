@@ -29,3 +29,4 @@ Admin seed credentials are controlled by `ADMIN_EMAIL` and `ADMIN_PASSWORD` in `
 "# motora_backend" 
 "# motora_backend" 
 "# motora_backend" 
+"# motora_backend" 

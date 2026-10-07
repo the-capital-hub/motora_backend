@@ -1,0 +1,22 @@
+const TestDrive = require('../models/TestDrive');
+const SellRequest = require('../models/SellRequest');
+const Lead = require('../models/Lead');
+
+const notFound = (doc, label, res) => { if (!doc) { res.status(404).json({ message: `${label} not found` }); return true; } return false; };
+exports.createTestDrive = async (req, res) => res.status(201).json(await TestDrive.create(req.body));
+exports.listMyTestDrives = async (req, res) => res.json(await TestDrive.find({ email: req.user.email }).populate('car').sort('-createdAt'));
+exports.listMySellRequests = async (req, res) => res.json(await SellRequest.find({ email: req.user.email }).sort('-createdAt'));
+exports.listTestDrives = async (req, res) => res.json(await TestDrive.find().populate('car').sort('-createdAt'));
+exports.getTestDrive = async (req, res) => { const doc = await TestDrive.findById(req.params.id).populate('car'); if (notFound(doc, 'Test drive', res)) return; res.json(doc); };
+exports.updateTestDrive = async (req, res) => { const doc = await TestDrive.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); if (notFound(doc, 'Test drive', res)) return; res.json(doc); };
+exports.deleteTestDrive = async (req, res) => { const doc = await TestDrive.findByIdAndDelete(req.params.id); if (notFound(doc, 'Test drive', res)) return; res.json({ message: 'Test drive deleted successfully' }); };
+exports.createSellRequest = async (req, res) => res.status(201).json(await SellRequest.create(req.body));
+exports.listSellRequests = async (req, res) => res.json(await SellRequest.find().sort('-createdAt'));
+exports.getSellRequest = async (req, res) => { const doc = await SellRequest.findById(req.params.id); if (notFound(doc, 'Sell request', res)) return; res.json(doc); };
+exports.updateSellRequest = async (req, res) => { const doc = await SellRequest.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); if (notFound(doc, 'Sell request', res)) return; res.json(doc); };
+exports.deleteSellRequest = async (req, res) => { const doc = await SellRequest.findByIdAndDelete(req.params.id); if (notFound(doc, 'Sell request', res)) return; res.json({ message: 'Sell request deleted successfully' }); };
+exports.createLead = async (req, res) => res.status(201).json(await Lead.create(req.body));
+exports.listLeads = async (req, res) => res.json(await Lead.find().sort('-createdAt'));
+exports.getLead = async (req, res) => { const doc = await Lead.findById(req.params.id); if (notFound(doc, 'Lead', res)) return; res.json(doc); };
+exports.updateLead = async (req, res) => { const doc = await Lead.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }); if (notFound(doc, 'Lead', res)) return; res.json(doc); };
+exports.deleteLead = async (req, res) => { const doc = await Lead.findByIdAndDelete(req.params.id); if (notFound(doc, 'Lead', res)) return; res.json({ message: 'Lead deleted successfully' }); };

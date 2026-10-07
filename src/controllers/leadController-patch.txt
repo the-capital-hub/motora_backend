@@ -1,0 +1,11 @@
+Add this function to your existing backend/src/controllers/leadController.js:
+
+exports.mine = async (req, res) => {
+  const items = await Lead.find({ user: req.user._id })
+    .populate("car", "brand model year price images")
+    .sort("-createdAt");
+
+  res.json({ items });
+};
+
+If your controller already uses module.exports instead of exports, merge this function into that existing export object.

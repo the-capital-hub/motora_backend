@@ -14,11 +14,23 @@ const carSchema = new mongoose.Schema(
     location: { type: String, required: true, trim: true },
     images: [{ type: String, trim: true }],
     description: { type: String, trim: true },
-    status: { type: String, enum: ["Available", "Reserved", "Sold"], default: "Available" },
+    status: {
+      type: String,
+      enum: ["Available", "Reserved", "Sold"],
+      default: "Available",
+    },
     featured: { type: Boolean, default: false },
     specs: { type: mongoose.Schema.Types.Mixed, default: {} },
+    imageSource: {
+  provider: { type: String },
+  title: { type: String },
+  pageUrl: { type: String },
+  originalUrl: { type: String },
+  author: { type: String },
+  license: { type: String },
+},
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 carSchema.index({ brand: 1, model: 1, location: 1 });
